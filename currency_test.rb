@@ -68,6 +68,13 @@ class CurrencyTest < Minitest::Test
    assert_equal calculator.conversion_rates, rates
  end
 
+  def test_10_currency_is_equal
+    rates = {USD: 1.0, AUD: 1.24}
+    money_bag = CurrencyConverter.new(rates)
+    assert money_bag.convert(Currency.new(1, :USD),:USD) == Currency.new(1,:USD)
+  end
+
+
 
 
 end

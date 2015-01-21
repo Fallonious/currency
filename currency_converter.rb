@@ -10,8 +10,12 @@ class CurrencyConverter
     @conversion_rates = conversion_rates
   end
 
+  def convert(original_currency, new_currency_code)
+    new_amount = (original_currency.amount*@conversion_rates[new_currency_code])/@conversion_rates[original_currency.code]
+    return Currency.new(new_amount, new_currency_code)
 
-end  
+  end
+end
 
 
   # def initialze(currency_code1, currency_code2)
@@ -35,8 +39,7 @@ end
 # usd_to_aus = CurrencyConverter.new
 #
 
-# cc = CurrencyConverter.new
-#
+#cc = CurrencyConverter.new
 # amount = 200.00
 # currency_code = "AUD"
 # bag_of_money = Currency.new(amount, currency_code)

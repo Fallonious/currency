@@ -50,4 +50,11 @@ class CurrencyTest < Minitest::Test
     refute nicole == tom
   end
 
+  def test_07_currencies_can_multiply
+    nicole = Currency.new(100.00, "AUD")
+    keith = Currency.new(100.00, "AUD")
+    tom = Currency.new(100.00, "USD")
+    assert nicole + keith
+    refute nicole == tom
+  end
 end

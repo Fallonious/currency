@@ -22,7 +22,7 @@ class Currency
     if self.code == other.code
       return (self.amount.+(other.amount))
     else
-      raise "currency error"
+      raise "DifferentCurrencyCodeError"
     end
   end
 
@@ -30,15 +30,24 @@ class Currency
     if self.code == other.code
       return (self.amount-(other.amount))
     else
-      raise "currency error"
+      raise "DifferentCurrencyCodeError"
     end
   end
 
   def matching(currency_code)
     if self.code != other.code
-      raise "currency error"
+      raise "DifferentCurrencyCodeError"
     end
   end
+
+  def multiply(other)
+    if self.code == other.code
+      return Currency.new(self.amount*(other.amount))
+    else
+      raise "DifferentCurrencyCodeError"
+    end
+  end
+
 end
 
 

@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './currency_class.rb'
+require './currency_converter.rb'
 
 class CurrencyTest < Minitest::Test
 
@@ -56,8 +57,17 @@ class CurrencyTest < Minitest::Test
     assert nicole * 2 == Currency.new(200.00, "AUD")
     assert nicole * 2.5 == Currency.new(250.00, "AUD")
   end
+
+  def test_08_currency_converter_exist
+    assert CurrencyConverter
+  end
+
+ def test_09_hash_of_conversion_rates_exists
+   rates = {USD: 1.0, AUD: 1.24}
+   calculator = CurrencyConverter.new(rates)
+   assert_equal calculator.conversion_rates, rates
+ end
+
+
+
 end
-
-
-#assert_raises(DifferentCurrencyCodeError) do
-#  rich + middle_class

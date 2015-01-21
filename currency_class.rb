@@ -2,11 +2,15 @@ class DifferentCurrencyCodeError < StandardError
 end
 
 class Currency
-  attr_reader :amount
+  # attr_reader :amount
 
   def initialize(amount, currency_code)
     @amount = amount
     @currency_code = currency_code
+  end
+
+  def amount
+    @amount
   end
 
   def code

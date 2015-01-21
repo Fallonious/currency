@@ -25,12 +25,27 @@ class Currency
       raise "currency error"
     end
   end
+
+  def -(other)
+    if self.code == other.code
+      return (self.amount-(other.amount))
+    else
+      raise "currency error"
+    end
+  end
+
+  def matching(currency_code)
+    if self.code != other.code
+      raise "currency error"
+    end
+  end
 end
 
-#
+
  nicole = Currency.new(100.00, "AUD")
  keith = Currency.new(100.00, "USD")
-#
+
+
 # cad = Currency.new(200.00 ,"CAD")
 #
 #

@@ -34,4 +34,20 @@ class CurrencyTest < Minitest::Test
     refute nicole == tom
   end
 
+  def test_05_like_currency_can_be_subtracted
+    nicole = Currency.new(100.00, "AUD")
+    keith = Currency.new(100.00, "AUD")
+    tom = Currency.new(100.00, "USD")
+    assert nicole + keith
+    refute nicole == tom
+  end
+
+  def test_06_currencies_must_match
+    nicole = Currency.new(100.00, "AUD")
+    keith = Currency.new(100.00, "AUD")
+    tom = Currency.new(100.00, "USD")
+    assert nicole + keith
+    refute nicole == tom
+  end
+
 end

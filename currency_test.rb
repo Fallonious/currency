@@ -13,48 +13,51 @@ class CurrencyTest < Minitest::Test
     assert_equal 100.00, currency.amount
   end
 
-  def test_2_currency_class_has_currency_code
+  def test_02_currency_class_has_currency_code
     currency = Currency.new(100.00, "AUD")
     assert_equal "AUD", currency.code
   end
 
-  def test_3_currency_can_be_equal_to_another_currency_object
+  def test_03_currency_can_be_equal_to_another_currency_object
     nicole = Currency.new(100.00, "AUD")
     keith = Currency.new(100.00, "AUD")
+    bob = Currency.new(111.00, "AUD")
     tom = Currency.new(100.00, "USD")
-    assert_equal true, nicole == keith
+    assert nicole == keith
+    refute bob == keith
     refute nicole == tom
   end
 
   def test_04_like_currency_can_be_added
     nicole = Currency.new(100.00, "AUD")
     keith = Currency.new(100.00, "AUD")
-    tom = Currency.new(100.00, "USD")
-    assert nicole + keith
-    refute nicole == tom
+    assert nicole + keith == Currency.new(200.00, "AUD")
   end
 
   def test_05_like_currency_can_be_subtracted
     nicole = Currency.new(100.00, "AUD")
     keith = Currency.new(100.00, "AUD")
-    tom = Currency.new(100.00, "USD")
-    assert nicole + keith
-    refute nicole == tom
+    assert (nicole - keith) == Currency.new(0.00, "AUD")
   end
 
-  def test_06_currencies_must_match
-    nicole = Currency.new(100.00, "AUD")
-    keith = Currency.new(100.00, "AUD")
-    tom = Currency.new(100.00, "USD")
-    assert nicole + keith
-    refute nicole == tom
+  def test_06_currency_codes_must_match
+    nicole = Currency.new(400.00, "AUS")
+    tom = Currency.new(200.00, "USD")
+    assert_raises(DifferentCurrencyCodeError) do
+      nicole + tom
+    end
+    assert_raises(DifferentCurrencyCodeError) do
+      nicole - tom
+    end
   end
 
   def test_07_currencies_can_multiply
-    nicole = Currency.new(100.00, "AUD")
-    keith = Currency.new(100.00, "AUD")
-    tom = Currency.new(100.00, "USD")
-    assert nicole + keith
-    refute nicole == tom
+    nicole = Currency.new(100, "AUD")
+    assert nicole * 2 == Currency.new(200.00, "AUD")
+    assert nicole * 2.5 == Currency.new(250.00, "AUD")
   end
 end
+
+
+#assert_raises(DifferentCurrencyCodeError) do
+#  rich + middle_class

@@ -1,3 +1,6 @@
+class DifferentCurrencyCodeError < StandardError
+end
+
 class Currency
   attr_reader :amount
 
@@ -5,10 +8,6 @@ class Currency
     @amount = amount
     @currency_code = currency_code
   end
-
-  # def amount
-  #   return @amount
-  # end
 
   def code
     return @currency_code
@@ -20,39 +19,30 @@ class Currency
 
   def +(other)
     if self.code == other.code
-      return (self.amount.+(other.amount))
+      return Currency.new(self.amount.+(other.amount), @currency_code)
     else
-      raise "DifferentCurrencyCodeError"
+      raise DifferentCurrencyCodeError, "You can't work with two different currency codes"
     end
   end
 
   def -(other)
     if self.code == other.code
-      return (self.amount-(other.amount))
+      return Currency.new(self.amount-(other.amount), @currency_code)
     else
-      raise "DifferentCurrencyCodeError"
+      raise DifferentCurrencyCodeError, "You can't work with two different currency codes"
     end
   end
 
-  def matching(currency_code)
-    if self.code != other.code
-      raise "DifferentCurrencyCodeError"
-    end
-  end
-
-  def multiply(other)
-    if self.code == other.code
-      return Currency.new(self.amount*(other.amount))
-    else
-      raise "DifferentCurrencyCodeError"
-    end
+  def *(factor)
+    Currency.new(@amount * factor, @currency_code)
   end
 
 end
 
 
- nicole = Currency.new(100.00, "AUD")
- keith = Currency.new(100.00, "USD")
+
+ # nicole = Currency.new(100.00, "AUD")
+ # keith = Currency.new(100.00, "USD")
 
 
 # cad = Currency.new(200.00 ,"CAD")

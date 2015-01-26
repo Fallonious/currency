@@ -110,4 +110,14 @@ class CurrencyTest < Minitest::Test
     end
   end
 
+  # def test_15_currency_can_be_initialized_with_a_string
+  #   nicole = Currency.new("A$400.00")
+  #   assert_equal 400.00 , nicole.amount
+  #   assert_equal :AUD , nicole.code
+  #
+  #   tom = Currency.new("$200.00")
+  #   assert_equal Currency.new(200.00, :USD).amount, tom.amount
+  #   assert_equal Currency.new(200.00, :USD).code, tom.code
+  # end
+
 end

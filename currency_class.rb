@@ -3,10 +3,28 @@ end
 
 class Currency
   # attr_reader :amount
+  CODES = {
+    "$" => :USD,
+    "A$" => :AUD
+  }
 
-  def initialize(amount, currency_code)
-    @amount = amount
-    @currency_code = currency_code
+  def initialize(*parameters)
+    if parameters.length == 2
+      @amount = parameters[0]
+      @currency_code = parameters[1]
+    # elsif parameters.length == 1 && parameters[0].class == String
+    #   string = parameters[0]
+    #
+    #   if CODES[string[0]] != nil
+    #     @amout = string[1..-1].to_f
+    #     @currency_code =  CODES[string[0]]
+    #   elsif CODES[string[0..1]] != nil
+    #     @amout = string[2..-1].to_f
+    #     @currency_code = CODES[string[0..1]]
+    #   else
+    #     raise DifferentCurrencyCodeError, "Could not parse code from string"
+    #   end
+    end
   end
 
   def amount
@@ -23,7 +41,7 @@ class Currency
 
   def +(other)
     if self.code == other.code
-      return Currency.new(self.amount.+(other.amount), @currency_code)
+      return Currency.new(self.amount + (other.amount), @currency_code)
     else
       raise DifferentCurrencyCodeError, "You can't work with two different currency codes"
     end
@@ -40,6 +58,8 @@ class Currency
   def *(factor)
     Currency.new(@amount * factor, @currency_code)
   end
+
+
 
 end
 

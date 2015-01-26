@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './currency_class.rb'
 require './currency_converter.rb'
+require './different_currency_code_error.rb'
+require './unknown_currency_code_error.rb'
 
 class CurrencyTest < Minitest::Test
 
@@ -42,7 +44,7 @@ class CurrencyTest < Minitest::Test
   end
 
   def test_06_currency_codes_must_match
-    nicole = Currency.new(400.00, "AUS")
+    nicole = Currency.new(400.00, "AUD")
     tom = Currency.new(200.00, "USD")
     assert_raises(DifferentCurrencyCodeError) do
       nicole + tom
@@ -81,4 +83,31 @@ class CurrencyTest < Minitest::Test
     assert money_bag.convert(Currency.new(1, :USD), :AUD) == Currency.new(1.24, :AUD)
     #assert money_bag.convert(Currency.new(1, :USD)) == ([USD: 25].*@conversion_rates[:AUD])
  end
+
+  def test_12_knows_multiple_currencies
+    rates = {USD: 1, AUD: 1.24, EUR: 0.87}
+    calculator = CurrencyConverter.new(rates)
+    assert_equal calculator.conversion_rates, rates
+  end
+
+  def test_13_changes_multiple_currencies
+    rates = {USD: 1, AUD: 1.24, EUR: 0.87}
+    money_bag = CurrencyConverter.new(rates)
+    assert money_bag.convert(Currency.new(5, :USD), :EUR) == Currency.new((0.87*5), :EUR)
+    assert money_bag.convert(Currency.new(10, :AUD), :EUR) == Currency.new(((10*0.87)/1.24), :EUR)
+  end
+
+  def test_14_unknown_currencies
+    rates = {USD: 1, AUD: 1.24, EUR: 0.87}
+    jill = Currency.new(50, :AUD)
+    hank = Currency.new(10, :CAD)
+    money_bag = CurrencyConverter.new(rates)
+    assert_raises UnknownCurrencyCodeError do
+        money_bag.convert(jill, :RUB)
+    end
+    assert_raises UnknownCurrencyCodeError do
+        money_bag.convert(hank, :EUR)
+    end
+  end
+
 end

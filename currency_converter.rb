@@ -11,11 +11,12 @@ class CurrencyConverter
   end
 
   def convert(original_currency, new_currency_code)
-    new_amount = (original_currency.amount*@conversion_rates[new_currency_code])/@conversion_rates[original_currency.code]
-    return Currency.new(new_amount, new_currency_code)
-    #
-    new_amount = (original_currency.amount*@conversion_rates[new_currency_code])
-    return Currency.new(new_amount, new_currency_code)
+    if conversion_rates.include?(new_currency_code) && conversion_rates.include?(original_currency.code)
+      new_amount = (original_currency.amount*@conversion_rates[new_currency_code])/@conversion_rates[original_currency.code]
+      return Currency.new(new_amount, new_currency_code)
+    else
+      raise UnknownCurrencyCodeError
+    end
   end
 
   # def exchange(original_currency, new_currency_code)
